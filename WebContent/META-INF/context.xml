@@ -1,9 +1,9 @@
 <Context>
-
+<!--
 <Resource name="jdbc/postgres" auth="Container"
           type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
           url=${url}
           username=${username} password=${password} maxTotal="20" maxIdle="10"
 maxWaitMillis="-1"/>
-
+-->
 </Context>
