@@ -24,6 +24,12 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
+	<bean id="secrets" class="com.adiva.dbaccess.Secrets"></bean>
+	
+	
+	
 <!--
  	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
@@ -32,13 +38,20 @@
 		<property name="password" value="postgres" />
 	</bean>
 -->	
+	<!--  
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
 		<property name="password" value="${password}" />
 	</bean>
-	
+	-->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/postgres" />
+		<property name="username" value="#{secrets.username}" />
+		<property name="password" value="#{secrets.password}" />
+	</bean>
 	<bean id = "studentJDBCTemplate" 
       class = "com.adiva.dbaccess.StudentJDBCTemplate">
       <property name = "dataSource" ref = "dataSource" />    
