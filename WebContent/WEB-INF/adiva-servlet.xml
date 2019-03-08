@@ -44,14 +44,14 @@
 	</bean>
 -->	
 	<!--  
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	<bean id="dataSourceWithEnvironmentVariables" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
 		<property name="password" value="${password}" />
 	</bean>
 	-->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	<bean id="dataSourceWithSecretsManager" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/amfam" />
 		<property name="username" value="#{secrets.username}" />
@@ -60,7 +60,7 @@
 	
 	<bean id = "studentJDBCTemplate" 
       class = "com.adiva.dbaccess.StudentDaoImpl">
-      <property name = "dataSource" ref = "dataSource" />    
+      <property name = "dataSource" ref = "dataSourceWithSecretsManager" />    
    </bean>
 
 </beans>
