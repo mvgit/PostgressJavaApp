@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.adiva.dbaccess.Student;
-import com.adiva.dbaccess.StudentJDBCTemplate;
+import com.adiva.dbaccess.StudentDaoImpl;
  
 /*
  * author: Mohan Vaze
@@ -19,15 +19,15 @@ import com.adiva.dbaccess.StudentJDBCTemplate;
 public class AdivaHelloWorld {
 
 	@Autowired
-	private StudentJDBCTemplate studentJDBCTemplate;
+	private StudentDaoImpl studentDao;
 	
 	@RequestMapping("/welcome")
 	public ModelAndView helloWorld() {
 		
 		List<Student> students = null;
 		
-		if(studentJDBCTemplate!=null){
-			students = studentJDBCTemplate.listStudents();
+		if(studentDao!=null){
+			students = studentDao.listStudents();
 		} else{
 			System.out.print("context is null.");
 		}

@@ -25,8 +25,13 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<bean id="secretsManager" class="com.adiva.utility.SecretsManager">
+		<property name="secretName" value="sampledbaccess" />
+		<property name="region" value="us-east-1" />
+	</bean>
 	
-	<bean id="secrets" class="com.adiva.dbaccess.Secrets"></bean>
+	
+	<bean id="secrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManager"></bean>
 	
 	
 	
@@ -52,8 +57,9 @@
 		<property name="username" value="#{secrets.username}" />
 		<property name="password" value="#{secrets.password}" />
 	</bean>
+	
 	<bean id = "studentJDBCTemplate" 
-      class = "com.adiva.dbaccess.StudentJDBCTemplate">
+      class = "com.adiva.dbaccess.StudentDaoImpl">
       <property name = "dataSource" ref = "dataSource" />    
    </bean>
 
