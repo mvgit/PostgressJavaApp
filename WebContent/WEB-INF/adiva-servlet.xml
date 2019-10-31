@@ -15,8 +15,9 @@
 	<context:component-scan
 		base-package="com.adiva.controller" />
 	<mvc:default-servlet-handler />
-	<context:property-placeholder />
- 	<!-- <context:property-placeholder location="classpath:db.properties"/>  -->
+	<!-- <context:property-placeholder />  -->
+ 	<context:property-placeholder location="classpath:db.properties"/>
+ 	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
@@ -24,16 +25,22 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+	<!--
 	<bean id="secretsManager" class="com.adiva.utility.SecretsManager">
 		<property name="secretName" value="itsnotsecretatall" />
 		<property name="region" value="us-east-1" />
 	</bean>
 	
-	
 	<bean id="secrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManager"></bean>
 	
+	<bean id="dataSourceWithSecretsManager" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/amfam" />
+		<property name="username" value="#{secrets.username}" />
+		<property name="password" value="#{secrets.password}" />
+	</bean>
 	
+	-->
 	
 <!--
  	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -43,24 +50,18 @@
 		<property name="password" value="postgres" />
 	</bean>
 -->	
-	<!--  
 	<bean id="dataSourceWithEnvironmentVariables" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="${url}" />
+		<property name="url" value="jdbc:postgresql://${host}:${port}/${schema}" />
 		<property name="username" value="${username}" />
 		<property name="password" value="${password}" />
 	</bean>
-	-->
-	<bean id="dataSourceWithSecretsManager" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/amfam" />
-		<property name="username" value="#{secrets.username}" />
-		<property name="password" value="#{secrets.password}" />
-	</bean>
+
+	
 	
 	<bean id = "studentJDBCTemplate" 
       class = "com.adiva.dbaccess.StudentDaoImpl">
-      <property name = "dataSource" ref = "dataSourceWithSecretsManager" />    
+      <property name = "dataSource" ref = "dataSourceWithEnvironmentVariables" />    
    </bean>
 
 </beans>
