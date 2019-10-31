@@ -6,11 +6,7 @@ This is a spring based java app which uses postgres.
 This app uses multi stage docker image build. The Dockerfile has two FROM instructions. The first stage build the spring web application.
 The second stage creates the image and copies the war file built in the first stage.
 
-To use this app. Git clone the repo. And run following command:
-
-docker image build -t spjapp:latest .
-
-Pre requisites to run the application locally. 
+Prerequisites to run the application locally. 
 1. Install Postgres db on host machine.
 2. Create a postgres database and under public schema create a table namely student.
 
@@ -22,7 +18,15 @@ CREATE TABLE public.student (
 );
 insert into student (name, age) values ('atharva', 10);
 
-Interactive mode
+To run it locally follow these steps.
+
+Step 1: Clone the repo.
+
+Step 2: Build the iamge.
+
+docker image build -t spjapp:latest .
+
+Step 3: Run the container.
 
 Docker command for dataSourceWithSecretsManager <br/>
 docker run --rm -it -p 8080:8080/tcp spjapp:latest
@@ -33,3 +37,6 @@ docker run --rm -it -p 8080:8080/tcp -e username=postgres -e password=postgres -
 Docker command for dataSourceWith db.properties File <br/>
 docker run --rm -it -p 8080:8080 spjapp:latest
 
+Step 4: To test the app visit:
+
+http://localhost:8080/simple/
