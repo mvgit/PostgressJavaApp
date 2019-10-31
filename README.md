@@ -1,12 +1,14 @@
 # PostgressJavaApp
-Spring mvc web application connecting to postgress DB
+Spring mvc web application connecting to postgress DB.
+
 This is a spring based java app which uses postgres.
 
 This app uses multi stage docker image build. The Dockerfile has two FROM instructions. The first stage build the spring web application.
-The second stage creates the image ans copies the war file built in the fisrt stage.
+The second stage creates the image and copies the war file built in the first stage.
 
-To use this app. Git clone the repo.
-run docker image build -t spjapp:latest .
+To use this app. Git clone the repo. And run following command:
+
+docker image build -t spjapp:latest .
 
 Pre requisites to run the application locally. 
 1. Install Postgres db on host machine.
