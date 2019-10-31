@@ -22,7 +22,7 @@ To run it locally follow these steps.
 
 Step 1: Clone the repo.
 
-Step 2: Build the iamge.
+Step 2: Build the image.
 
 docker image build -t spjapp:latest .
 
