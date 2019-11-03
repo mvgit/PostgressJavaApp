@@ -16,7 +16,10 @@ CREATE TABLE public.student (
  	"name" varchar(20) NULL,
  	CONSTRAINT student_pk PRIMARY KEY (id)
 );
-insert into student (name, age) values ('atharva', 10);
+
+INSERT INTO public.student(
+	id, age, name)
+	VALUES (10, 10, 'mohan');
 
 To run it locally follow these steps.
 
@@ -40,3 +43,7 @@ docker run --rm -it -p 8080:8080 spjapp:latest
 Step 4: To test the app visit:
 
 http://localhost:8080/simple/
+
+
+Addded docker-compose.yml file to start multi container app. 
+This removes the need to install postgres locally. Second step is still required.

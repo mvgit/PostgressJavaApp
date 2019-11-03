@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  student-web:
+    build: .
+    ports:
+      - target: 8080
+        published: 8080
+    networks:
+      - student-net
+  student-db:
+    image: "postgres:11.5-alpine"
+    networks:
+      student-net:
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+    ports:
+      - target: 5432
+        published: 5432
+    volumes:
+      - type: volume
+        source: pgdata115
+        target: /var/lib/postgresql/data
+networks:
+  student-net:
+volumes:
+  pgdata115:
