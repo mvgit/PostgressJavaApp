@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spja-app
+  labels:
+    app: spja
+  namespace: springapps
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: spja
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spja
+    spec:
+      containers:
+      - image: mvdock/spjapp:latest
+        imagePullPolicy: Always
+        name: spja
+        ports:
+        - name: port8080
+          containerPort: 8080
+          protocol: TCP
+        env:
+        - name: host
+          value: "host.docker.internal"
+        - name: port
+          value: "5432"
+        - name: schema
+          value: "postgres"
+        - name: username
+          value: "postgres"
+        - name: password
+          value: "postgres"

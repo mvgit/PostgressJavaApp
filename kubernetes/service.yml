@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spja-service
+  namespace: springapps
+spec:
+  selector:
+    app: spja
+  ports:
+   -  protocol: TCP
+      port: 5678
+      targetPort: 8080
+
