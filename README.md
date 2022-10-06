@@ -47,3 +47,5 @@ http://localhost:8080/simple/
 
 Addded docker-compose.yml file to start multi container app. 
 This removes the need to install postgres locally. Second step is still required.
+Go to Project Root and run
+docker compose up
