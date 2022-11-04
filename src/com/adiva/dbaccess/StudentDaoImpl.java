@@ -15,30 +15,64 @@ public class StudentDaoImpl implements StudentDAO {
       this.dataSource = dataSource;
       this.jdbcTemplateObject = new JdbcTemplate(this.dataSource);
    }
+   
+   //ORACLE
+   
+   public void create(String name, Integer age) {
+      String SQL = "insert into student (NAME, age) values (?, ?)";
+      jdbcTemplateObject.update( SQL, name, age);
+      System.out.println("Created Record Name = " + name + " Age = " + age);
+      return;
+   }
+   
+   public Student getStudent(Integer id) {
+	      String SQL = "select * from student where id = ?";
+	      Student student = jdbcTemplateObject.queryForObject(SQL, 
+	         new Object[]{id}, new StudentMapper());
+	      
+	      return student;
+	}
+   
+   public List<Student> listStudents() {
+	      String SQL = "select * from Student";
+	      List <Student> students = jdbcTemplateObject.query(SQL, new StudentMapper());
+	      return students;
+	}
+	
+   
+   
+   //POSTGRESS
+   /*
    public void create(String name, Integer age) {
       String SQL = "insert into public.student (NAME, age) values (?, ?)";
       jdbcTemplateObject.update( SQL, name, age);
       System.out.println("Created Record Name = " + name + " Age = " + age);
       return;
    }
+   
    public Student getStudent(Integer id) {
       String SQL = "select * from public.student where id = ?";
       Student student = jdbcTemplateObject.queryForObject(SQL, 
          new Object[]{id}, new StudentMapper());
-      
       return student;
    }
+   
+   
+   
    public List<Student> listStudents() {
       String SQL = "select * from public.Student";
       List <Student> students = jdbcTemplateObject.query(SQL, new StudentMapper());
       return students;
    }
+   */
+   
    public void delete(Integer id) {
       String SQL = "delete from public.student where id = ?";
       jdbcTemplateObject.update(SQL, id);
       System.out.println("Deleted Record with ID = " + id );
       return;
    }
+   
    public void update(Integer id, Integer age){
       String SQL = "update public.student set age = ? where id = ?";
       jdbcTemplateObject.update(SQL, age, id);

@@ -25,13 +25,16 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- PostGreSQL -->
 	<!--
 	<bean id="secretsManager" class="com.adiva.utility.SecretsManager">
 		<property name="secretName" value="itsnotsecretatall" />
 		<property name="region" value="us-east-1" />
 	</bean>
 	
-	<bean id="secrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManager"></bean>
+	<bean id="secrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManager">
+	</bean>
 	
 	<bean id="dataSourceWithSecretsManager" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
@@ -50,18 +53,77 @@
 		<property name="password" value="postgres" />
 	</bean>
 -->	
+<!-- 
 	<bean id="dataSourceWithEnvironmentVariables" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://${host}:${port}/${schema}" />
 		<property name="username" value="${username}" />
 		<property name="password" value="${password}" />
+		<property name="maxTotal" value="2" />
+		<property name="initialSize" value="1" />
 	</bean>
 
-	
-	
 	<bean id = "studentJDBCTemplate" 
       class = "com.adiva.dbaccess.StudentDaoImpl">
       <property name = "dataSource" ref = "dataSourceWithEnvironmentVariables" />    
+   </bean>
+-->   
+
+<!-- Oracle  -->
+
+	<!-- Basic connection. No pooling -->
+	<!--
+	<bean id="dataSourceOracle" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	    <property name="url" value="jdbc:oracle:thin:@${ohost}:${oport}:${osid}" />
+	    <property name="username" value="${ousername}" />
+	    <property name="password" value="${opassword}" />
+	</bean>
+	-->
+
+	<!-- Values from properties file -->
+	<!-- 
+	<bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
+	    <property name="URL" value="jdbc:oracle:thin:@${ohost}:${oport}:${osid}" />
+	    <property name="user" value="${ousername}" />
+	    <property name="password" value="${opassword}" />
+	    <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource" />
+	    <property name="connectionPoolName" value="ANAG_POOL" />
+	    <property name="minPoolSize" value="5" />
+	    <property name="maxPoolSize" value="10" />
+	    <property name="initialPoolSize" value="5" />
+	    <property name="inactiveConnectionTimeout" value="120" />
+	    <property name="validateConnectionOnBorrow" value="true" />
+	    <property name="maxStatements" value="10" />
+	</bean>
+	 -->
+	 
+	<!-- Values from secrets manager secrets file. Three beans are created -->
+	<bean id="secretsManagerOracle" class="com.adiva.utility.SecretsManager">
+		<property name="secretName" value="oracleDBConfig" />
+		<property name="region" value="us-east-1" />
+	</bean>
+	
+	<bean id="oSecrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManagerOracle">
+	</bean>
+	
+	<bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
+	    <property name="URL" value="jdbc:oracle:thin:@#{oSecrets.host}:#{oSecrets.port}:#{oSecrets.sid}" />
+	    <property name="user" value="#{oSecrets.username}" />
+	    <property name="password" value="#{oSecrets.password}" />
+	    <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource" />
+	    <property name="connectionPoolName" value="ANAG_POOL" />
+	    <property name="minPoolSize" value="5" />
+	    <property name="maxPoolSize" value="10" />
+	    <property name="initialPoolSize" value="5" />
+	    <property name="inactiveConnectionTimeout" value="120" />
+	    <property name="validateConnectionOnBorrow" value="true" />
+	    <property name="maxStatements" value="10" />
+	</bean>
+
+	<bean id = "studentJDBCTemplate" 
+      class = "com.adiva.dbaccess.StudentDaoImpl">
+      <property name = "dataSource" ref = "dataSourceOracle" />    
    </bean>
 
 </beans>

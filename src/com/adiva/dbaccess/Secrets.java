@@ -9,7 +9,16 @@ public class Secrets {
 	private String dbClusterIdentifier;
 	private String host;
 	private String port;
+	private String sid;
 
+
+	public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
 
 	public String getHost() {
 		return host;
