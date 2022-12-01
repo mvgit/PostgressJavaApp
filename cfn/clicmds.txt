@@ -1,0 +1,18 @@
+aws cloudformation create-stack \
+--stack-name ThreeTierAppCicdpipelineStack \
+--capabilities CAPABILITY_NAMED_IAM \
+--template-body file://cicd.yml \
+--region us-east-1
+
+aws cloudformation update-stack \
+--stack-name ThreeTierAppCicdpipelineStack \
+--capabilities CAPABILITY_NAMED_IAM \
+--template-body file://cicd.yml \
+--region us-east-1
+
+aws cloudformation delete-stack \
+--stack-name ThreeTierAppCicdpipelineStack \
+--region us-east-1
+aws cloudformation delete-stack \
+--stack-name ThreeTierAppCicdpipelineStack \
+--region us-west-2

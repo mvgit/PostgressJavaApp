@@ -1,0 +1,9 @@
+{
+    "Parameters" : {
+      "PipelineName" : "ThreeTierAppCicdPipeline",
+      "BranchName" : "master",
+      "RepositoryName" :"ThreeTierApp",
+      "Email" : "vazem@amazon.com"
+
+    }
+  }

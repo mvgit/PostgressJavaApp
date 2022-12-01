@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  install: # Install AWS cli, maven, Trivy
+    runtime-versions:
+      java: corretto8
+    commands:
+       - apt-get update
+
+
+  pre_build: # Check availability of Maven and it's version
+    commands:
+      - "echo -e '\nMaven version: '"
+      - "mvn --version"
+  
+  build: # Build the app
+    commands:
+      - cd app && mvn clean package && cd ..
+  post_build: # Run Trivy to scan docker image, Push the Docker image to the ECR and deploy the app via helm to EKS
+    commands:
+      - "echo -e '\nMaven version: '"
+      - "mvn --version"
