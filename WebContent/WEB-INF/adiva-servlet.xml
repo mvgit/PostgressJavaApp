@@ -27,10 +27,10 @@
 	</bean>
 	
 	<!-- PostGreSQL -->
-	<!--
+	
 	<bean id="secretsManager" class="com.adiva.utility.SecretsManager">
-		<property name="secretName" value="itsnotsecretatall" />
-		<property name="region" value="us-east-1" />
+		<property name="secretName" value="pgdbsecret" />
+		<property name="region" value="us-west-2" />
 	</bean>
 	
 	<bean id="secrets" class="com.adiva.utility.SecretsManager" factory-method="getSecret" factory-bean="secretsManager">
@@ -38,12 +38,12 @@
 	
 	<bean id="dataSourceWithSecretsManager" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/amfam" />
+		<property name="url" value="jdbc:postgresql://#{secrets.host}:#{secrets.port}/postgres" />
 		<property name="username" value="#{secrets.username}" />
 		<property name="password" value="#{secrets.password}" />
 	</bean>
 	
-	-->
+
 	
 <!--
  	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -99,6 +99,7 @@
 	 -->
 	 
 	<!-- Values from secrets manager secrets file. Three beans are created -->
+	<!--
 	<bean id="secretsManagerOracle" class="com.adiva.utility.SecretsManager">
 		<property name="secretName" value="oracleDBConfig" />
 		<property name="region" value="us-east-1" />
@@ -120,10 +121,10 @@
 	    <property name="validateConnectionOnBorrow" value="true" />
 	    <property name="maxStatements" value="10" />
 	</bean>
-
+	-->
 	<bean id = "studentJDBCTemplate" 
       class = "com.adiva.dbaccess.StudentDaoImpl">
-      <property name = "dataSource" ref = "dataSourceOracle" />    
+      <property name = "dataSource" ref = "dataSourceWithSecretsManager" />    
    </bean>
 
 </beans>
